@@ -1,13 +1,17 @@
 import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import { NextRequest } from "next/server";
 
 let requestcount=0;
 
 export function middleware(request:NextRequest){
-    requestcount++;
-    console.log("Number of request is"+requestcount);
-    ;
-    return NextResponse.next();
+    if(request.nextUrl.pathname.startsWith('/api')){
+       return NextResponse.redirect(new URL('/signin',request.url));
+
+    }
+
+    if(request.nextUrl.pathname.startsWith('/dashboard')){
+        return NextResponse.next();
+    }
     
 }
 
